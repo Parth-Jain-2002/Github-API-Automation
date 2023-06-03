@@ -110,7 +110,7 @@ public class RestService {
             System.out.println("Response Code: " + responseEntity.getStatusCodeValue());
             System.out.println("Response Body: " + responseEntity.getBody());
 
-            return "Success";
+            return responseEntity.getBody();
         } catch (Exception e) {
             e.printStackTrace();
             return "Failure";

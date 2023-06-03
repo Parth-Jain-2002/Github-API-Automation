@@ -1,5 +1,6 @@
 package com.parth.miniproject.service;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -15,6 +16,14 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parth.miniproject.models.Repo;
+import com.parth.miniproject.models.RepoRequestDTO;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 public class RestService {
     private RestTemplate restTemplate;
@@ -71,24 +80,40 @@ public class RestService {
         return repos;
     }
 
-    public static void main(String[] args) throws JsonMappingException, JsonProcessingException{
-        // RestTemplate restTemplate = new RestTemplate();
+    public String createUserRepo(RepoRequestDTO repoRequestDTO) throws JsonMappingException, JsonProcessingException{
+        try {
+            String url = "https://api.github.com/user/repos";
+            
+            // Set the required headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Accept", "application/vnd.github+json");
+            headers.set("Authorization", "Bearer "+repoRequestDTO.getToken());
+            headers.set("X-GitHub-Api-Version", "2022-11-28");
+            
+            // Set the request payload
+            MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+            requestBody.add("name", repoRequestDTO.getName());
+            requestBody.add("description", repoRequestDTO.getDescription());
+            requestBody.add("homepage", repoRequestDTO.getHomepage());
+            requestBody.add("private", repoRequestDTO.getIsPrivate());
+            requestBody.add("is_template", repoRequestDTO.getIsTemplate());
+            
+            // Create the request entity
+            RequestEntity<MultiValueMap<String, String>> requestEntity = new RequestEntity<>(requestBody, headers, HttpMethod.POST, new URI(url));
+            
+            // Send the request
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
+            
+            // Print the response
+            System.out.println("Response Code: " + responseEntity.getStatusCodeValue());
+            System.out.println("Response Body: " + responseEntity.getBody());
 
-        // // Set the URL endpoint you want to send the GET request to
-        // String url = "https://api.github.com/users/Parth-Jain-2002/repos";
-
-        // // Send the GET request and retrieve the response
-        // ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-
-        
-        
-        // // Print the JSON response
-        // System.out.println(getUserReposString("Parth-Jain-2002"));
-
-        // // Extract the response body
-        // String responseBody = response.getBody();
-
-        // Process the response as needed
-        //System.out.println(responseBody);
+            return "Success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Failure";
+        }
     }
 }

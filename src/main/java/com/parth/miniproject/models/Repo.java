@@ -1,8 +1,13 @@
 package com.parth.miniproject.models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "repos")
 public class Repo {
+    @Id
     private int id;
     private String node_id;
     private String name;
@@ -10,9 +15,9 @@ public class Repo {
 
     private String owner;
 
-    private Date created_at;
-    private Date updated_at;
-    private Date pushed_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
+    private LocalDateTime pushed_at;
 
     private int stargazers_count;
     private int watchers_count;
@@ -20,8 +25,8 @@ public class Repo {
     public Repo() {
     }
 
-    public Repo(int id, String node_id, String name, String full_name, String owner, Date created_at, Date updated_at,
-            Date pushed_at, int stargazers_count, int watchers_count) {
+    public Repo(int id, String node_id, String name, String full_name, String owner, LocalDateTime created_at, LocalDateTime updated_at,
+    LocalDateTime pushed_at, int stargazers_count, int watchers_count) {
         this.id = id;
         this.node_id = node_id;
         this.name = name;
@@ -54,15 +59,15 @@ public class Repo {
         return owner;
     }
 
-    public Date getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public Date getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public Date getPushed_at() {
+    public LocalDateTime getPushed_at() {
         return pushed_at;
     }
 
@@ -94,15 +99,15 @@ public class Repo {
         this.owner = owner;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 
-    public void setPushed_at(Date pushed_at) {
+    public void setPushed_at(LocalDateTime pushed_at) {
         this.pushed_at = pushed_at;
     }
 

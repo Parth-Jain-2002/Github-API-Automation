@@ -43,6 +43,7 @@ public class RestService {
     }
 
     public ArrayList<Repo> getUserReposArray(String username) throws JsonMappingException, JsonProcessingException{
+        // Due to pagination, the GitHub API returns only 30 repos at a time
         JsonNode jsonNode = getUserRepos(username);
         ArrayList <Repo> repos = new ArrayList<Repo>();
 

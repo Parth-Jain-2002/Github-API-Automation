@@ -41,11 +41,10 @@ This is a project using SpringBoot, MongoDB, Gradle and GITHUB Api
     Use : `To create a repo in Github` \
     Format :  `POST Request` \
     Body :  `{
+                "token": XXXX,
                 "name": "RepoName",
                 "description": "RepoDescription",
                 "homepage": "https://github.com",
-                "private": false,
-                "has_issues": true,
-                "has_projects": true,
-                "has_wiki": true
+                "isPrivate": false,
+                "isTemplate": true
             }`

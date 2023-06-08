@@ -48,3 +48,7 @@ This is a project using SpringBoot, MongoDB, Gradle and GITHUB Api
                 "isPrivate": false,
                 "isTemplate": true
             }`
+
+Tasks to do next:
+1. Add Reddit API as well
+2. Try out integrating github actions through this
